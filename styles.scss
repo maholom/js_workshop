@@ -1,6 +1,5 @@
 html {
-  font-size: 62.5%;
-  /*nastaveno na 10px, defaultne na 16px*/
+  font-size: 62.5%; /*nastaveno na 10px, defaultne na 16px*/
   box-sizing: border-box;
 }
 
@@ -16,24 +15,24 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  font-family: "Ubuntu", sans-serif;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 header.header-news {
+  & > button {
+    position: absolute;
+    height: 100%;
+    opacity: 0.5;
+    top: 0;
+    &.last {
+      right: 0;
+    }
+  }
+  & > div.header-news__container {
+    display: flex;
+  }
   position: relative;
   min-height: 18rem;
-}
-header.header-news > button {
-  position: absolute;
-  height: 100%;
-  opacity: 0.5;
-  top: 0;
-}
-header.header-news > button.last {
-  right: 0;
-}
-header.header-news > div.header-news__container {
-  display: flex;
 }
 
 header.header-news > div {
@@ -62,5 +61,3 @@ section.main-content {
 .main-content_day:hover {
   background-color: rgba(0, 0, 0, 0.15);
 }
-
-/*# sourceMappingURL=styles.css.map */

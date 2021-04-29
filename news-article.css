@@ -1,0 +1,9 @@
+div.news-article {
+  background-size: cover;
+  min-height: 18rem;
+  flex: 1 0 0;
+  color: #f7f7f7;
+  background-color: black;
+}
+
+/*# sourceMappingURL=news-article.css.map */
