@@ -1,3 +1,5 @@
+@import 'colors';
+
 html {
   font-size: 62.5%; /*nastaveno na 10px, defaultne na 16px*/
   box-sizing: border-box;
@@ -21,9 +23,22 @@ body {
 header.header-news {
   & > button {
     position: absolute;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    color: rgba($black, 0.4);
+    cursor: pointer;
+    user-select: none;
+    transition: 0.5s;
     height: 100%;
-    opacity: 0.5;
     top: 0;
+    &:focus {
+      outline: none;
+    }
+    &:hover {
+      color: $black;
+      background-color: rgba($white, 0.4);
+    }
     &.last {
       right: 0;
     }

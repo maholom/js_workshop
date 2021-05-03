@@ -7,6 +7,14 @@ const daysInfoCount = 32;
 let carouselItemStart = 0;
 let articles;
 
+fetch('http://localhost:3000/news.json')
+  .then((serverResponse) => serverResponse.text())
+  .then((responseText) => {
+    const data = JSON.parse(responseText);
+    articles = data.articles;
+    populateNewsCarousel(data.articles, carouselItemStart);
+  });
+
 function populateDaysInfo() {
   for (let i = 1; i < daysInfoCount; i++) {
     const day = document.createElement('div');
@@ -24,8 +32,8 @@ function createDivForNews(newsContents) {
 
   const title = document.createElement('span');
   title.classList.add('news-article__title');
-  newsArticle.appendChild(title);
   title.innerText = newsContents.title; //vytahneme titul z objektu
+  newsArticle.appendChild(title);
   return newsArticle;
 }
 
@@ -35,25 +43,29 @@ function populateNewsCarousel(news, startAt) {
     const newsValue = news[i];
     const newsDiv = createDivForNews(newsValue);
     header.appendChild(newsDiv);
+    checkButtonsVisibility(articles, carouselItemCount, carouselItemStart);
   }
 }
-
-fetch('http://localhost:3000/news.json')
-  .then((serverResponse) => serverResponse.text())
-  .then((responseText) => {
-    const data = JSON.parse(responseText);
-    articles = data.articles;
-    populateNewsCarousel(data.articles, carouselItemStart);
-  });
 
 const buttonLeft = document.querySelector('#carousel-button-left');
 const buttonRight = document.querySelector('#carousel-button-right');
 
 buttonLeft.addEventListener('click', () => {
-  carouselItemStart++;
-  populateNewsCarousel(articles, carouselItemStart);
-});
-buttonRight.addEventListener('click', () => {
   carouselItemStart--;
   populateNewsCarousel(articles, carouselItemStart);
 });
+
+buttonRight.addEventListener('click', () => {
+  carouselItemStart++;
+  populateNewsCarousel(articles, carouselItemStart);
+});
+
+function checkButtonsVisibility(
+  articles,
+  carouselItemCount,
+  carouselItemStart,
+) {
+  buttonRight.hidden = carouselItemStart >= articles.length - carouselItemCount;
+  buttonLeft.hidden = carouselItemStart === 0;
+  return;
+}
