@@ -1,3 +1,5 @@
+import { NewsArticle } from './components/news-article/news-article.js';
+
 const header = document.querySelector(
   'header.header-news > div.header-news__container',
 );
@@ -25,26 +27,14 @@ function populateDaysInfo() {
 }
 populateDaysInfo();
 
-function createDivForNews(newsContents) {
-  const newsArticle = document.createElement('div');
-  newsArticle.classList.add('news-article');
-  newsArticle.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), transparent), url(${newsContents.image})`;
-
-  const title = document.createElement('span');
-  title.classList.add('news-article__title');
-  title.innerText = newsContents.title; //vytahneme titul z objektu
-  newsArticle.appendChild(title);
-  return newsArticle;
-}
-
 function populateNewsCarousel(news, startAt) {
   header.innerText = '';
   for (let i = startAt; i < startAt + carouselItemCount; i++) {
     const newsValue = news[i];
-    const newsDiv = createDivForNews(newsValue);
+    const newsDiv = new NewsArticle().createDivForNews(newsValue);
     header.appendChild(newsDiv);
-    checkButtonsVisibility(articles, carouselItemCount, carouselItemStart);
   }
+  checkButtonsVisibility(articles, carouselItemCount, carouselItemStart);
 }
 
 const buttonLeft = document.querySelector('#carousel-button-left');
