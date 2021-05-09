@@ -7,9 +7,9 @@ fetch('http://localhost:3000/news.json')
   .then((responseText) => {
     const data = JSON.parse(responseText);
     new Carousel().articles = data.articles;
-    new Carousel().populateNewsCarousel(
+    Carousel().populateNewsCarousel(
       data.articles,
-      new Carousel().carouselItemStart,
+      Carousel().carouselItemStart,
     );
   });
 
