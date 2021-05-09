@@ -1,9 +1,9 @@
-import { NewsArticle } from '../news-article/news-article.js';
+import {NewsArticle} from '../news-article/news-article.js';
 
 export class Carousel {
   constructor() {
     this.header = document.querySelector(
-      'header.header-news > div.header-news__container',
+        'header.header-news > div.header-news__container',
     );
     this.carouselItemCount = 2;
     this.carouselItemStart = 0;
@@ -24,13 +24,15 @@ export class Carousel {
 
   populateNewsCarousel(news) {
     this.articles = news;
+      this.articles ??= news;
+    }
     this.header.innerText = '';
     for (
-      let i = this.carouselItemStart;
-      i < this.carouselItemStart + this.carouselItemCount;
-      i++
+        let i = this.carouselItemStart;
+        i < this.carouselItemStart + this.carouselItemCount;
+        i++
     ) {
-      const newsValue = news[i];
+      const newsValue = this.articles[i];
       const newsDiv = new NewsArticle().createDivForNews(newsValue);
       this.header.appendChild(newsDiv);
     }
@@ -39,7 +41,7 @@ export class Carousel {
 
   checkButtonsVisibility() {
     this.buttonRight.hidden =
-      this.carouselItemStart >= this.articles.length - this.carouselItemCount;
+        this.carouselItemStart >= this.articles.length - this.carouselItemCount;
     this.buttonLeft.hidden = this.carouselItemStart === 0;
   }
 }
