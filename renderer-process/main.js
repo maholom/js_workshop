@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 import { Carousel } from './components/carousel/carousel.js';
+=======
+import {Carousel} from './components/carousel/carousel.js';
+>>>>>>> da4f7b3f60b8c6578f851c087cf9d7bc8073aba1
 
 const daysInfoCount = 32;
 const mainContent = document.querySelector('section.main-content');
 
+<<<<<<< HEAD
 fetch('http://localhost:3000/news.json')
   .then((serverResponse) => serverResponse.text())
   .then((responseText) => {
@@ -10,6 +15,15 @@ fetch('http://localhost:3000/news.json')
     const newsCarousel = new Carousel();
     newsCarousel.populateNewsCarousel(data.articles);
   });
+=======
+fetch('http://localhost:3000/news.json').
+    then((serverResponse) => serverResponse.text()).
+    then((responseText) => {
+      const data = JSON.parse(responseText);
+      const newsCarousel = new Carousel();
+      newsCarousel.populateNewsCarousel(data.articles);
+    });
+>>>>>>> da4f7b3f60b8c6578f851c087cf9d7bc8073aba1
 
 function populateDaysInfo() {
   for (let i = 1; i < daysInfoCount; i++) {

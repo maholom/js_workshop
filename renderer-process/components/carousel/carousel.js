@@ -13,17 +13,21 @@ export class Carousel {
 
     this.buttonLeft.addEventListener('click', () => {
       this.carouselItemStart--;
-      this.populateNewsCarousel(this.articles);
+      this.populateNewsCarousel();
     });
 
     this.buttonRight.addEventListener('click', () => {
       this.carouselItemStart++;
-      this.populateNewsCarousel(this.articles);
+      this.populateNewsCarousel();
     });
   }
 
   populateNewsCarousel(news) {
+<<<<<<< HEAD
     this.articles = news;
+=======
+    if (undefined !== news) {
+>>>>>>> da4f7b3f60b8c6578f851c087cf9d7bc8073aba1
       this.articles ??= news;
     }
     this.header.innerText = '';
