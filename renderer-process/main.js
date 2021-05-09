@@ -1,20 +1,16 @@
-import { NewsArticle } from './components/news-article/news-article.js';
-
-const header = document.querySelector(
-  'header.header-news > div.header-news__container',
-);
-const mainContent = document.querySelector('section.main-content');
-const carouselItemCount = 2;
+import { Carousel } from './components/carousel/carousel.js';
 const daysInfoCount = 32;
-let carouselItemStart = 0;
-let articles;
+const mainContent = document.querySelector('section.main-content');
 
 fetch('http://localhost:3000/news.json')
   .then((serverResponse) => serverResponse.text())
   .then((responseText) => {
     const data = JSON.parse(responseText);
-    articles = data.articles;
-    populateNewsCarousel(data.articles, carouselItemStart);
+    new Carousel().articles = data.articles;
+    new Carousel().populateNewsCarousel(
+      data.articles,
+      new Carousel().carouselItemStart,
+    );
   });
 
 function populateDaysInfo() {
@@ -27,7 +23,7 @@ function populateDaysInfo() {
 }
 populateDaysInfo();
 
-function populateNewsCarousel(news, startAt) {
+/*function populateNewsCarousel(news, startAt) {
   header.innerText = '';
   for (let i = startAt; i < startAt + carouselItemCount; i++) {
     const newsValue = news[i];
@@ -58,4 +54,4 @@ function checkButtonsVisibility(
   buttonRight.hidden = carouselItemStart >= articles.length - carouselItemCount;
   buttonLeft.hidden = carouselItemStart === 0;
   return;
-}
+}*/
