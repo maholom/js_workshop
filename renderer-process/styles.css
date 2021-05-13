@@ -1,3 +1,4 @@
+@import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
 html {
   font-size: 62.5%;
   /*nastaveno na 10px, defaultne na 16px*/
@@ -60,7 +61,7 @@ section.main-content {
   padding-left: 1rem;
 }
 
-.main-content_day {
+/*.main-content_day {
   aspect-ratio: 1/1;
   width: calc(100% / 7 - 1rem);
   display: flex;
@@ -70,10 +71,15 @@ section.main-content {
   border-radius: 0.5rem;
   cursor: pointer;
   transition: 0.5s;
-}
-
-.main-content_day:hover {
+}*/
+/*.main-content_day:hover {
   background-color: rgba(0, 0, 0, 0.15);
 }
+
+section.main-content {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1rem;
+}*/
 
 /*# sourceMappingURL=styles.css.map */

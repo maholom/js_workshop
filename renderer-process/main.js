@@ -1,4 +1,5 @@
 import { Carousel } from './components/carousel/carousel.js';
+import { Day } from './components/day/day.js';
 
 const daysInfoCount = 32;
 const mainContent = document.querySelector('section.main-content');
@@ -13,10 +14,7 @@ fetch('http://localhost:3000/news.json')
 
 function populateDaysInfo() {
   for (let i = 1; i < daysInfoCount; i++) {
-    const day = document.createElement('div');
-    day.classList.add('main-content_day');
-    day.innerHTML = [i];
-    mainContent.appendChild(day);
+    mainContent.appendChild(new Day(i));
   }
 }
 

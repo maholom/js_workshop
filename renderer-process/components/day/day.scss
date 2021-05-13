@@ -1,0 +1,17 @@
+@import 'colors';
+
+app-day {
+  aspect-ratio: 1/1;
+  width: calc(100% / 7 - 1rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+app-day:hover {
+  background-color: rgba(0, 0, 0, 0.15);
+}
