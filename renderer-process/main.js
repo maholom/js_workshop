@@ -3,13 +3,13 @@ import { Day } from './components/day/day.js';
 
 const daysInfoCount = 32;
 const mainContent = document.querySelector('section.main-content');
+const carousel = document.querySelector('app-carousel');
 
 fetch('http://localhost:3000/news.json')
   .then((serverResponse) => serverResponse.text())
   .then((responseText) => {
     const data = JSON.parse(responseText);
-    const newsCarousel = new Carousel();
-    newsCarousel.populateNewsCarousel(data.articles);
+    carousel.populateNewsCarousel(data.articles);
   });
 
 function populateDaysInfo() {
