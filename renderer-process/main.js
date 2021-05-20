@@ -1,7 +1,6 @@
 import { Carousel } from './components/carousel/carousel.js';
 import { Day } from './components/day/day.js';
 
-const daysInfoCount = 32;
 const mainContent = document.querySelector('section.main-content');
 const carousel = document.querySelector('app-carousel');
 
@@ -12,13 +11,23 @@ fetch('http://localhost:3000/news.json')
     carousel.populateNewsCarousel(data.articles);
   });
 
-function populateDaysInfo() {
-  for (let i = 1; i < daysInfoCount; i++) {
-    mainContent.appendChild(new Day(i));
-  }
+const currentDate = new Date();
+const maxDate = new Date(
+  currentDate.getFullYear(),
+  currentDate.getMonth() + 1,
+  0,
+).getDate();
+
+for (let i = 1; i <= maxDate; i++) {
+  const dayDate = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    i,
+  );
+  mainContent.appendChild(new Day(dayDate));
 }
 
-populateDaysInfo();
+const modalContainer = document.querySelector('.modal-container');
 
 /*function populateNewsCarousel(news, startAt) {
   header.innerText = '';

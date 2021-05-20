@@ -5,9 +5,12 @@ app-day {
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 0.5rem;
+  border-radius: 1rem;
+  box-shadow: 0.5px 10px rgba(35, 35, 35, 0.2);
   cursor: pointer;
   transition: 0.5s;
+  background: #82a383;
+  color: #f7f7f7;
 }
 
 app-day:hover {
