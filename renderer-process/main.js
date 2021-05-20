@@ -28,6 +28,11 @@ for (let i = 1; i <= maxDate; i++) {
 }
 
 const modalContainer = document.querySelector('.modal-container');
+const buttonOpenModal = document.getElementById('open-modal');
+
+buttonOpenModal.addEventListener('click', () => {
+  modalContainer.hidden = false;
+});
 
 /*function populateNewsCarousel(news, startAt) {
   header.innerText = '';

@@ -90,5 +90,5 @@ section.modal-container {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: black;
+  background-color: transparentize($black, 0.7);
 }
