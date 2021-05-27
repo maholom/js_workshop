@@ -91,4 +91,33 @@ section.modal-container {
   top: 0;
   left: 0;
   background-color: transparentize($black, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-body {
+  min-width: 35rem;
+  background-color: $white;
+  border-radius: 0.5rem;
+  box-shadow: 0.5rem 0.5rem 1rem transparentize($black, 0.7);
+  padding: 1rem;
+}
+
+.modal-separator {
+  min-height: 1px;
+  content: ' ';
+  border-bottom: 1px solid transparentize($black, 0.7);
+  margin: 1rem 0;
+}
+
+.modal-actions {
+  padding-top: 1rem;
+}
+
+.modal-header {
+  display: flex;
+  & > *:first-child {
+    flex: 1 0 0;
+  }
 }

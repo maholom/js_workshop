@@ -27,12 +27,37 @@ for (let i = 1; i <= maxDate; i++) {
   mainContent.appendChild(new Day(dayDate));
 }
 
-const modalContainer = document.querySelector('.modal-container');
-const buttonOpenModal = document.getElementById('open-modal');
-
-buttonOpenModal.addEventListener('click', () => {
-  modalContainer.hidden = false;
+const openModalButton = document.querySelector('#open-modal');
+openModalButton.addEventListener('click', () => {
+  showDayModal().then((result) => console.log(result));
 });
+
+function showDayModal() {
+  const promiseResult = new Promise((resolve, reject) => {
+    const template = document.querySelector('#modal-template');
+    const modal = template.content.cloneNode(true); //naklonuji template, abych s nim mohl pracovat
+
+    const closeAction = () => {
+      const child = document.querySelector('section.modal-container');
+      document.body.removeChild(child);
+      resolve(null);
+    };
+
+    modal.querySelector('#close-modal').addEventListener('click', closeAction);
+    modal
+      .querySelector('#cancel-button')
+      .addEventListener('click', closeAction);
+
+    modal.querySelector('#save-button').addEventListener('click', () => {
+      const formRef = document.querySelector('#modal-form');
+      const formData = new FormData(formRef);
+      const isHoliday = formData.get('isHolidayControl') === 'on';
+      resolve('ahoj');
+    });
+    document.body.appendChild(modal);
+  });
+  return promiseResult;
+}
 
 /*function populateNewsCarousel(news, startAt) {
   header.innerText = '';
@@ -45,7 +70,7 @@ buttonOpenModal.addEventListener('click', () => {
 }
 
 const buttonLeft = document.querySelector('#carousel-button-left');
-const buttonRight = document.querySelector('#carousel-button-right');
+const buttonRight = document.querySelector('#carousel-button-rig, ht');
 
 buttonLeft.addEventListener('click', () => {
   carouselItemStart--;
