@@ -27,37 +27,49 @@ for (let i = 1; i <= maxDate; i++) {
   mainContent.appendChild(new Day(dayDate));
 }
 
-const openModalButton = document.querySelector('#open-modal');
-openModalButton.addEventListener('click', () => {
-  showDayModal().then((result) => console.log(result));
-});
-
 function showDayModal() {
-  const promiseResult = new Promise((resolve, reject) => {
-    const template = document.querySelector('#modal-template');
-    const modal = template.content.cloneNode(true); //naklonuji template, abych s nim mohl pracovat
+  const template = document.querySelector('#modal-template');
+  const modal = template.content.cloneNode(true);
+  const closeAction = () => {
+    const child = document.querySelector('section.modal-container');
+    document.body.removeChild(child);
+  };
+  modal.querySelector('#close-modal').addEventListener('click', closeAction);
+  const cancelButton = modal.querySelector('#cancel-button');
 
-    const closeAction = () => {
-      const child = document.querySelector('section.modal-container');
-      document.body.removeChild(child);
-      resolve(null);
-    };
-
-    modal.querySelector('#close-modal').addEventListener('click', closeAction);
-    modal
-      .querySelector('#cancel-button')
-      .addEventListener('click', closeAction);
-
-    modal.querySelector('#save-button').addEventListener('click', () => {
-      const formRef = document.querySelector('#modal-form');
-      const formData = new FormData(formRef);
-      const isHoliday = formData.get('isHolidayControl') === 'on';
-      resolve('ahoj');
-    });
-    document.body.appendChild(modal);
+  cancelButton.addEventListener('click', closeAction);
+  modal.querySelector('#save-button').addEventListener('click', () => {
+    const formRef = document.querySelector('#modal-form');
+    const formData = new FormData(formRef);
+    const isHoliday = formData.get('isHolidayControl') === 'on';
   });
-  return promiseResult;
+  document.body.appendChild(modal);
+
+  const checkbox = document.querySelector('#limitAttendeesByGender');
+  const row = document.querySelector('#genderSelectRow');
+  checkbox.addEventListener('change', (event) => {
+    if (event.target.checked) {
+      row.classList.remove('hidden');
+    } else {
+      row.classList.add('hidden');
+    }
+  });
+
+  fetch('http://localhost:3000/contacts')
+    .then((serverResponse) => serverResponse.text())
+    .then((responseText) => {
+      const data = JSON.parse(responseText);
+      const select = document.querySelector('#eventAttendees');
+      data.forEach((it) => {
+        const option = document.createElement('option');
+        option.setAttribute('value', it.id);
+        option.innerText = `${it.first_name} ${it.last_name}`;
+        select.appendChild(option);
+      });
+    });
 }
+
+window.showModal = showDayModal;
 
 /*function populateNewsCarousel(news, startAt) {
   header.innerText = '';
