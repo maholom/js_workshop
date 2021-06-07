@@ -71,6 +71,15 @@ function showDayModal() {
 
 window.showModal = showDayModal;
 
+let keyPressed = '';
+document.addEventListener('keydown', (keyboardEvent) => {
+  keyPressed += keyboardEvent.key;
+  if (keyPressed.includes('time')) {
+    alert('ahoj');
+    keyPressed = '';
+  }
+});
+
 /*function populateNewsCarousel(news, startAt) {
   header.innerText = '';
   for (let i = startAt; i < startAt + carouselItemCount; i++) {
