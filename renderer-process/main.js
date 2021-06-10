@@ -3,6 +3,7 @@ import { Day } from './components/day/day.js';
 
 const mainContent = document.querySelector('section.main-content');
 const carousel = document.querySelector('app-carousel');
+const popup = document.querySelector('pop-up');
 
 fetch('http://localhost:3000/news.json')
   .then((serverResponse) => serverResponse.text())
@@ -38,9 +39,19 @@ function showDayModal() {
   const cancelButton = modal.querySelector('#cancel-button');
 
   cancelButton.addEventListener('click', closeAction);
+
   modal.querySelector('#save-button').addEventListener('click', () => {
     const formRef = document.querySelector('#modal-form');
     const formData = new FormData(formRef);
+    const data = formData.entries();
+    const object = {};
+    for (let formValue of data) {
+      const key = formValue[0];
+      const value = formValue[1];
+      object[key] = value;
+      //object.gender = 'Female'
+    }
+
     const isHoliday = formData.get('isHolidayControl') === 'on';
   });
   document.body.appendChild(modal);
@@ -55,23 +66,50 @@ function showDayModal() {
     }
   });
 
+  let contactsArray;
   fetch('http://localhost:3000/contacts')
     .then((serverResponse) => serverResponse.text())
     .then((responseText) => {
-      const data = JSON.parse(responseText);
-      const select = document.querySelector('#eventAttendees');
-      data.forEach((it) => {
-        const option = document.createElement('option');
-        option.setAttribute('value', it.id);
-        option.innerText = `${it.first_name} ${it.last_name}`;
-        select.appendChild(option);
-      });
+      contactsArray = JSON.parse(responseText);
+      createOptions(contactsArray);
     });
+
+  const radioButtons = document.querySelectorAll('#genderSelectRow > input');
+  for (let radio of radioButtons) {
+    radio.addEventListener('change', () => {
+      const formRef = document.querySelector('#modal-form');
+      const formData = new FormData(formRef);
+      const gender = formData.get('gender');
+      const filteredContacts = contactsArray.filter((contact) => {
+        return contact.gender === gender;
+      });
+      createOptions(filteredContacts);
+    });
+  }
+}
+
+function createOptions(contactsArray) {
+  const select = document.querySelector('#eventAttendees');
+  //select.innerHTML = '<option value=""></option>';
+
+  const oldOptions = document.querySelectorAll('generated-option');
+
+  oldOptions.forEach((opt) => {
+    select.removeChild(opt);
+  });
+
+  contactsArray.forEach((it) => {
+    const option = document.createElement('option');
+    option.setAttribute('value', it.id);
+    option.innerText = `${it.first_name} ${it.last_name}`;
+    select.appendChild(option);
+    option.classList.add('generated-option');
+  });
 }
 
 window.showModal = showDayModal;
 
-let keyPressed = '';
+/*let keyPressed = '';
 document.addEventListener('keydown', (keyboardEvent) => {
   keyPressed += keyboardEvent.key;
   if (keyPressed.includes('time')) {
@@ -79,6 +117,10 @@ document.addEventListener('keydown', (keyboardEvent) => {
     keyPressed = '';
   }
 });
+
+const showPopup = () => {
+  popup.innerHTML = `<div class="popup-content"></div>`;
+};
 
 /*function populateNewsCarousel(news, startAt) {
   header.innerText = '';
