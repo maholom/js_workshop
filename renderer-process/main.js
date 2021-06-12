@@ -109,17 +109,30 @@ function createOptions(contactsArray) {
 
 window.showModal = showDayModal;
 
-/*let keyPressed = '';
+const password = document.querySelector('#password');
+
+let keyPressed = '';
 document.addEventListener('keydown', (keyboardEvent) => {
   keyPressed += keyboardEvent.key;
   if (keyPressed.includes('time')) {
-    alert('ahoj');
+    showDateModal();
     keyPressed = '';
   }
 });
 
-const showPopup = () => {
-  popup.innerHTML = `<div class="popup-content"></div>`;
+const showDateModal = () => {
+  const popupTime = new Date().toLocaleTimeString();
+
+  password.innerHTML = `<div class="popupModal">
+      <div class="popupContent">
+        <p>${popupTime}</p>
+      </div>
+    </div>`;
+  const popupModal = document.querySelector('.popupModal');
+  popupModal.style.display = 'block';
+  setTimeout(() => {
+    popupModal.style.display = 'none';
+  }, 5000);
 };
 
 /*function populateNewsCarousel(news, startAt) {

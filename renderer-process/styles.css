@@ -141,4 +141,36 @@ section.modal-container {
   display: none !important;
 }
 
+.popupModal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popupContent {
+  background-color: #f4f4f4;
+  padding: 20px;
+  margin: 20% auto;
+  width: 70%;
+  border-radius: 10%;
+}
+
+.closeBtn {
+  color: #ccc;
+  float: right;
+}
+
+.closeBtn:hover,
+.closeBtn:focus {
+  cursor: pointer;
+  color: #000;
+  text-decoration: none;
+}
+
 /*# sourceMappingURL=styles.css.map */
