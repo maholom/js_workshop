@@ -121,11 +121,9 @@ document.addEventListener('keydown', (keyboardEvent) => {
 });
 
 const showDateModal = () => {
-  const popupTime = new Date().toLocaleTimeString();
-
   password.innerHTML = `<div class="popupModal">
       <div class="popupContent">
-        <p>${popupTime}</p>
+        <p class='clock'></p>
       </div>
     </div>`;
   const popupModal = document.querySelector('.popupModal');
@@ -133,6 +131,13 @@ const showDateModal = () => {
   setTimeout(() => {
     popupModal.style.display = 'none';
   }, 5000);
+
+  function displayTime() {
+    let time = new Date().toLocaleTimeString();
+    document.querySelector('.clock').textContent = time;
+  }
+  displayTime();
+  const createClock = setInterval(displayTime, 1000);
 };
 
 /*function populateNewsCarousel(news, startAt) {
