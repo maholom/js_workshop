@@ -5,6 +5,39 @@ const mainContent = document.querySelector('section.main-content');
 const carousel = document.querySelector('app-carousel');
 const popup = document.querySelector('pop-up');
 
+window.showLoader = showLoader;
+window.hideLoader = hideLoader;
+
+function showLoader() {
+  document.body.appendChild(
+    document.querySelector('#loaderTemplate').content.cloneNode(true),
+  );
+}
+function hideLoader() {
+  document.body.removeChild(document.querySelector('.loader'));
+}
+
+function showToaster(success, title, message) {
+  const toasterTemplate = document
+    .querySelector('#toasterTemplate')
+    .content.cloneNode(true);
+  const toasterElement = toasterTemplate.querySelector('.toaster');
+  toasterElement.addEventListener('click', () =>
+    document.body.removeChild(toasterElement),
+  );
+  toasterElement.classList.add(success ? 'success' : 'error');
+  toasterTemplate.querySelector('h1').innerText = title;
+  toasterTemplate.querySelector('p').innerText = message;
+  document.body.appendChild(toasterTemplate);
+  setTimeout(() => {
+    try {
+      document.body.removeChild(toasterElement);
+    } catch (e) {
+      console.warn('Toaster already removed');
+    }
+  }, 3000);
+}
+
 fetch('http://localhost:3000/news.json')
   .then((serverResponse) => serverResponse.text())
   .then((responseText) => {
@@ -28,7 +61,7 @@ for (let i = 1; i <= maxDate; i++) {
   mainContent.appendChild(new Day(dayDate));
 }
 
-function showDayModal() {
+function showDayModal(dayDate) {
   const template = document.querySelector('#modal-template');
   const modal = template.content.cloneNode(true);
   const closeAction = () => {
@@ -44,13 +77,35 @@ function showDayModal() {
     const formRef = document.querySelector('#modal-form');
     const formData = new FormData(formRef);
     const data = formData.entries();
-    const object = {};
+
+    const object = {
+      date: dayDate,
+    };
+
     for (let formValue of data) {
       const key = formValue[0];
       const value = formValue[1];
       object[key] = value;
       //object.gender = 'Female'
     }
+
+    showLoader();
+
+    fetch('http://localhost:3000/calendar', {
+      method: 'POST',
+      body: JSON.stringify(object),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((response) => {
+      hideLoader();
+      if (response.status === 200) {
+        showToaster(true, 'Data uložena', 'Vaše událost byla uložena.');
+      } else {
+        showToaster(false, 'Chyba serveru', 'Server není dostupný.');
+      }
+      console.log(response);
+    });
 
     const isHoliday = formData.get('isHolidayControl') === 'on';
   });

@@ -161,16 +161,55 @@ section.modal-container {
   border-radius: 10%;
 }
 
-.closeBtn {
-  color: #ccc;
-  float: right;
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(35, 35, 35, 0.5);
+  font-size: 2.5rem;
+  color: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.closeBtn:hover,
-.closeBtn:focus {
-  cursor: pointer;
-  color: #000;
-  text-decoration: none;
+.anim-loader {
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: rotate;
+  animation-duration: 2s;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateZ(0);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+.toaster {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 2rem;
+  padding: 1rem;
+  font-size: 1.6rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 5px 10px rgba(35, 35, 35, 0.5);
+}
+.toaster > h1 {
+  font-size: 20px;
+}
+.toaster.error {
+  background-color: #974141;
+  color: #f7f7f7;
+}
+.toaster.success {
+  background-color: #82a383;
+  color: #232323;
 }
 
 /*# sourceMappingURL=styles.css.map */
