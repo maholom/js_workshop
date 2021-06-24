@@ -101,6 +101,25 @@ function showDayModal(dayDate) {
       hideLoader();
       if (response.status === 200) {
         showToaster(true, 'Data uložena', 'Vaše událost byla uložena.');
+        fetch('http://localhost:3000/calendar')
+          .then((serverResponse) => serverResponse.text())
+          .then((responseText) => {
+            const events = JSON.parse(responseText);
+            const days = document.querySelectorAll('app-day');
+            const eventValues = Object.values(events); //Object.keys - vytahne pole hodnot/klicu z objektu
+            //cyklus s iterable
+            eventValues.forEach((event) => {
+              for (let day of days) {
+                const eventDate = new Date(event.date);
+                const dayDate = day.date;
+                // v pripade ze sa rovna eventDate a dayDate -> nastavit event
+                console.log(
+                  eventDate.toDateString(),
+                  eventDate.toDateString() === dayDate.toDateString(),
+                );
+              }
+            });
+          });
       } else {
         showToaster(false, 'Chyba serveru', 'Server není dostupný.');
       }
