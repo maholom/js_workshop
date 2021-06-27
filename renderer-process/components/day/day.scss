@@ -14,6 +14,9 @@ app-day {
   background: $light-green;
   color: $white;
   font-size: 2.5rem;
+  &.event {
+    background-color: $yellow-green;
+  }
 }
 
 app-day:hover {

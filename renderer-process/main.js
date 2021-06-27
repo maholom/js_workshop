@@ -61,7 +61,27 @@ for (let i = 1; i <= maxDate; i++) {
   mainContent.appendChild(new Day(dayDate));
 }
 
-function showDayModal(dayDate) {
+function refreshEvents() {
+  fetch('http://localhost:3000/calendar')
+    .then((serverResponse) => serverResponse.text())
+    .then((responseText) => {
+      const events = JSON.parse(responseText);
+      const days = document.querySelectorAll('app-day');
+      const eventValues = Object.values(events); //Object.keys - vytahne pole hodnot/klicu z objektu
+      //cyklus s iterable
+      eventValues.forEach((event) => {
+        for (let day of days) {
+          const eventDate = new Date(event.date);
+          const dayDate = day.date;
+          if (eventDate.toDateString() === dayDate.toDateString()) {
+            day.setEvent(event);
+          }
+        }
+      });
+    });
+}
+
+function showDayModal(dayDate, dayEvent) {
   const template = document.querySelector('#modal-template');
   const modal = template.content.cloneNode(true);
   const closeAction = () => {
@@ -101,7 +121,10 @@ function showDayModal(dayDate) {
       hideLoader();
       if (response.status === 200) {
         showToaster(true, 'Data uložena', 'Vaše událost byla uložena.');
-        fetch('http://localhost:3000/calendar')
+        refreshEvents();
+        closeAction();
+
+        /*fetch('http://localhost:3000/calendar')
           .then((serverResponse) => serverResponse.text())
           .then((responseText) => {
             const events = JSON.parse(responseText);
@@ -119,7 +142,7 @@ function showDayModal(dayDate) {
                 );
               }
             });
-          });
+          });*/
       } else {
         showToaster(false, 'Chyba serveru', 'Server není dostupný.');
       }
@@ -128,6 +151,7 @@ function showDayModal(dayDate) {
 
     const isHoliday = formData.get('isHolidayControl') === 'on';
   });
+
   document.body.appendChild(modal);
 
   const checkbox = document.querySelector('#limitAttendeesByGender');
@@ -139,6 +163,20 @@ function showDayModal(dayDate) {
       row.classList.add('hidden');
     }
   });
+
+  if (dayEvent !== undefined) {
+    dayEvent.eventTitle;
+    document.querySelector('#eventTitle').value = dayEvent.eventTitle;
+    document.querySelector('#eventDescription').value =
+      dayEvent.eventDescription;
+    document.querySelector('#limitAttendeesByGender').checked =
+      dayEvent.limitAttendeesByGender === 'on';
+    if (dayEvent.gender !== undefined) {
+      document.querySelector(
+        '[value="' + dayEvent.gender + '"]',
+      ).checked = true;
+    }
+  }
 
   let contactsArray;
   fetch('http://localhost:3000/contacts')

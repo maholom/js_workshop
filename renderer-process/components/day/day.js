@@ -29,8 +29,12 @@ export class Day extends HTMLElement {
     }
   }
 
+  setEvent(event) {
+    this.event = event;
+    this.classList.add('event');
+  }
   handleClickEvent() {
-    window.showModal(this.date);
+    window.showModal(this.date, this.event);
   }
 }
 
